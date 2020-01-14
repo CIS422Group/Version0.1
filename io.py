@@ -1,3 +1,8 @@
+"""
+functions to read student data from a file into the queue, and write the queue back out to a file
+
+"""
+
 from objects import Student, Queue
 
 studentQ = Queue()
