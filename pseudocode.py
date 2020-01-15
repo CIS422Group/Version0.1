@@ -27,9 +27,9 @@ class student:
 	# init as 0, accumulating through the term, 
 	# will be use for summary of class participation at the end of term
 	# req: 3_D 
-	int NumCalled		 
+	int NumCalled	# number of times called throughout the term	 
 	int NumFlage	# 0 is no flage, 1 is flage for 
-	list LiDates = []
+	list LiDates = [] #dates they answered the questions.
 
 	def printStudent():
 		# use for testing, anything that make sence
@@ -102,7 +102,6 @@ class classMembers:
 
 # we need a global classMembers according to req: 6.1
 classMembers roster
-
 
 def importData(File importfile):
 	# req: 3_E_4-5, 4.4 
