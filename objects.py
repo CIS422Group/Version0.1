@@ -5,7 +5,7 @@ Author: Lucas Hyatt
 '''
 
 class Student:
-	def __init__(self, fname, lname, uoID, email, phoneticSpelling, revealCode, numCalled, dates):
+	def __init__(self, fname, lname, uoID, email, phoneticSpelling, revealCode, numCalled, numFlags, dates):
 		self.fname = fname
 		self.lname = lname
 		self.uoID = uoID
@@ -14,6 +14,7 @@ class Student:
 		self.reveal = revealCode # Not entirely sure about this variable, just put it as boolean for now
 		self.numCalled = numCalled # Number of times a student is called throughout the term
 		self.flag = 0
+		self.numFlags = numFlags
 		self.dates = dates # List of dates when the student answered a question
 
 	def printStudent(self):
@@ -39,12 +40,12 @@ class Student:
 
 # Testing
 
-student1 = Student("Lucas", "Hyatt", 951550079, "llh@uoregon.edu", "loo-kiss", True, 0, [])
-student2 = Student("Maura", "McCabe", 111222333, "maura@uoregon.edu", "mor-uh", True, 0, [])
-student3 = Student("Noah", "Tigner", 123456789, "notig@uoregon.edu", "no-uh", False, 0, [])
-student4 = Student("Jimmy", "Lam", 987654321, "jim@uoregon.edu", "ji-mee", True, 0, [])
-student5 = Student("Yin", "Jin", 123789456, "yjin@uoregon.edu", "yi-n", False, 0, [])
-student6 = Student("Anthony", "Hornoff", 123456789, "noff@uoregon.edu", "hor-noff", True, 0, [])
+student1 = Student("Lucas", "Hyatt", 951550079, "llh@uoregon.edu", "loo-kiss", True, 0, 0, [])
+student2 = Student("Maura", "McCabe", 111222333, "maura@uoregon.edu", "mor-uh", True, 0, 0, [])
+student3 = Student("Noah", "Tigner", 123456789, "notig@uoregon.edu", "no-uh", False, 0, 0, [])
+student4 = Student("Jimmy", "Lam", 987654321, "jim@uoregon.edu", "ji-mee", True, 0, 0, [])
+student5 = Student("Yin", "Jin", 123789456, "yjin@uoregon.edu", "yi-n", False, 0, 0, [])
+student6 = Student("Anthony", "Hornoff", 123456789, "noff@uoregon.edu", "hor-noff", True, 0, 0, [])
 print('Testing for student object: \n')
 student1.printStudent()
 print(student2.display())
@@ -147,7 +148,7 @@ studentQ.dequeue()
 
 print("Check for empty:", studentQ.isEmpty())
 studentQ.combine(test.queue)
-new_stud = Student("New", "Student", 951550079, "new@uoregon.edu", "yo-new", True, 0, [])
+new_stud = Student("New", "Student", 951550079, "new@uoregon.edu", "yo-new", True, 0, 0, [])
 studentQ.insertOne(new_stud, 3)
 studentQ.printQ()
 print("Check for empty:", studentQ.isEmpty())
