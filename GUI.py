@@ -8,14 +8,28 @@ Last Modified: 1/13/20
 import tkinter as tk
 import time
 
-def printGUI(textWindow, text, hStartIdx, hEndIdx):
-    textWindow.pack()
-    textWindow.insert('1.0', ' ' * 60)  # clear names
-    textWindow.insert('1.0', text)
+class GUI:
+    def __init__(self, winTitle: str, highlightColor: str):
+        self.title = winTitle
+        self.t = tk.Tk()
+        self.bgColor = highlightColor
+        self.window = tk.Text(self.t, height=1, width=60, font=('Courier', 16))
 
-    textWindow.tag_add('tag1', '1.{}'.format(hStartIdx), '1.{}'.format(hEndIdx))
-    textWindow.tag_config('tag1', background='green')
+        self.t.title(self.title)  # set window description
 
+    def update(self, text: str, highlightStart: int, highlightEnd: int):
+        """ Prints the names given in <text> to the GUI screen.
+        highlightStart is the starting index of the highlighting
+        and highlightEnd is the ending index.
+        """
+        self.window.pack()
+        self.window.insert('1.0', ' ' * 60)  # clear names
+        self.window.insert('1.0', text)      # write text to GUI
+
+        # now add highlighting
+        self.window.tag_add('tag1', '1.{}'.format(highlightStart), '1.{}'.format(highlightEnd))
+        self.window.tag_config('tag1', background=self.bgColor)
+        self.t.update()
 
 def main():
     name1 = "Maura McCabe"
@@ -24,25 +38,22 @@ def main():
     name4 = "Yin Jin"
     name5 = 'Noah Tigner'
 
-    win = tk.Tk()
-    win.title("Current Cold Calling List")
+    gui = GUI('Students on deck', 'green')
 
-    textWindow = tk.Text(win, height=1, width=60, font=('Courier', 16))
+    print('Starting GUI test')
 
     names = "{}   {}   {}   {}".format(name1, name2, name3, name4)
 
     highlightBegin = len(name1) + 3
     highlightEnd = highlightBegin + len(name2)
-    printGUI(textWindow, names, highlightBegin, highlightEnd)
-    win.update()
+    gui.update(names, highlightBegin, highlightEnd)
 
     print('highlighting changing in 3 seconds...')
     time.sleep(3)
 
     highlightBegin = len(name1) + len(name2) + 6
     highlightEnd = highlightBegin + len(name3)
-    printGUI(textWindow, names, highlightBegin, highlightEnd)
-    win.update()
+    gui.update(names, highlightBegin, highlightEnd)
 
     print('list changing in 3 seconds...')
     time.sleep(3)
@@ -51,13 +62,11 @@ def main():
 
     highlightBegin = 0
     highlightEnd = highlightBegin + len(name2)
-    printGUI(textWindow, names, highlightBegin, highlightEnd)
-    win.update()
+    gui.update(names, highlightBegin, highlightEnd)
 
     print("\n--- End of test. Close the cold calling window to exit ---")
 
-    win.mainloop() # blocks until the window is closed
-
+    gui.t.mainloop()  # blocks until the window is closed
 
 if __name__ == '__main__':
     main()
