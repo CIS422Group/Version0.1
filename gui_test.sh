@@ -1,1 +1,1 @@
-python3 GIU.py
+python3 GUI.py
