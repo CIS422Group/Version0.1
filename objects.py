@@ -112,6 +112,8 @@ class classQueue:
 				print("Queue at index", i, "has", end = " ")
 				self.queue[i].printStudent()
 
+
+
 print('Testing for queue object: \n')
 studentQ = classQueue()
 test = classQueue()
