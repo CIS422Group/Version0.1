@@ -7,8 +7,8 @@ Usage:
 
 from setuptools import setup
 
-APP = ['GUI.py']
-DATA_FILES = []
+APP = ['HOME.py']
+DATA_FILES = ['GUI.py']
 OPTIONS = {
     'iconfile':'cold_call.icns',
 }
@@ -16,6 +16,8 @@ OPTIONS = {
 setup(
     app=APP,
     data_files=DATA_FILES,
-    options={'py2app': OPTIONS},
+    options={
+    	'py2app': OPTIONS
+    },
     setup_requires=['py2app'],
 )
