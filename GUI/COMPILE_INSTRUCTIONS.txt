@@ -1,4 +1,4 @@
-There should be an app called GUI.app in the 'dist' directory, and you can double click
+There should be an app called GUI.app in the GUI directory, and you can double click
 the app to open it.
 
 
@@ -17,4 +17,4 @@ TO COMPILE THE APP:
 
             python3 setup.py py2app
 
-4. The app should be located inside the 'dist' folder.
+   This will create two folders: build and dist. The app should be located inside the 'dist' folder.

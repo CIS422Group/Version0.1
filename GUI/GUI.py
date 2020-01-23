@@ -2,7 +2,7 @@
 The main GIU window for selecting students
 
 Author: Jimmy Lam
-Last Modified: 1/18/20
+Last Modified: 1/22/20
 """
 
 import tkinter as tk
@@ -44,10 +44,9 @@ class GUI:
         self.text.configure(state='disabled')  # prevents user from clicking and editing the text
         self.mainWindow.update()
 
-class ErrorBox(GUI):
-    def __init__(self, winTitle: str):
-        super().__init__(winTitle)
-        #self.text = tk.
+def errorBox(msg: str):
+    root = tk.Tk()
+
 
 def testArrowKeys():
     """ Opens the GUI with 4 names, and the window remains unchanged.
