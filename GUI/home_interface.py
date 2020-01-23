@@ -18,6 +18,6 @@ teacherView = tk.Button(root, text="Teacher View", padx=10, pady=10, fg="#E74C3C
 # teacherView.pack()
 
 root.title("Cold Call System")
-# root.iconbitmap('cold_call.icns') #Attempt to change icon for program... :(
+root.iconbitmap('cold_call.icns') #Attempt to change icon for program... :(
 
 root.mainloop()
