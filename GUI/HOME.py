@@ -9,6 +9,7 @@ import GUI
 root = tk.Tk() #Establishes structure for app window
 root.resizable(False, False)
 root.title("Cold Call System")
+root.attributes("-topmost", True)   # open window in front
 
 '''
 Color Scheme:
@@ -20,11 +21,17 @@ yellow = #ffde04
 def switch_view():
     GUI.testScreenUpdate()
 
-
 def inputFile():
-	filename = filedialog.askopenfilename(initialdir="./..", title="Select File")
+    filename = filedialog.askopenfilename(initialdir="./..", title="Select File")
 
-	#This is where we insert the rest of I/O
+    #This is where we insert the rest of I/O
+
+def export():
+    #GUI.ErrorBox('Log Error', "Log Error", "This function needs to be implemented").display()
+    pass
+
+def exitProgram():
+    root.destroy()
 
 pane = tk.Frame(root, bg = '#0486ff', bd=30)
 pane.pack(fill = tk.BOTH, expand = True)
@@ -43,20 +50,25 @@ button_font = tkinter.font.Font(family="Helvetica",size=36,weight="bold")
 user_view = tk.Button(pane, text="User View", width=15, height=3, activeforeground='#7cff68', fg="#ff0443", command=switch_view)
 user_view.pack() 
 user_view['font'] = button_font
+user_view.update()
 
 input_roster = tk.Button(pane, text="Input Roster", width=15, height=3, activeforeground='#7cff68', fg="#ff0443", command=inputFile)
 input_roster.pack() 
 input_roster['font'] = button_font
+input_roster.update()
 
-export_calls = tk.Button(pane, text="Export to Log", width=15, height=3, activeforeground='#7cff68', fg="#ff0443")
+export_calls = tk.Button(pane, text="Export to Log", width=15, height=3, activeforeground='#7cff68', fg="#ff0443", command=export())
 export_calls.pack() 
 export_calls['font'] = button_font
+export_calls.update()
 
-exit_menu = tk.Button(pane, text="Quit", width=15, height=3, activeforeground='#7cff68', fg="#ff0443", command=quit)
+exit_menu = tk.Button(pane, text="Quit", width=15, height=3, activeforeground='#7cff68', fg="#ff0443", command=exitProgram)
 exit_menu.pack() 
 exit_menu['font'] = button_font
+exit_menu.update()
 
 # Main Loop
+root.attributes("-topmost", False)  # allow window to go behind other windows
 root.mainloop()
 
 '''
