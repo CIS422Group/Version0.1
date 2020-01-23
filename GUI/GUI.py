@@ -2,7 +2,7 @@
 The main GIU window for selecting students
 
 Author: Jimmy Lam
-Last Modified: 1/22/20
+Last Modified: 1/23/20
 """
 
 import tkinter as tk
@@ -45,31 +45,87 @@ class GUI:
         self.text.configure(state='disabled')  # prevents user from clicking and editing the text
         self.mainWindow.update()
 
-def errorBox(msg: str):
-    root = tk.Tk()
-    canvasWidth = 200
-    canvasHeight = 200
+class MessageBox:
+    def __init__(self, title: str, heading: str, msg: str):
+        self.title = title
+        self.heading = heading
+        self.msg = msg
+        self.canvasWidth = 400
+        self.canvasHeight = 170
+        self.root = tk.Tk()
 
-    canvas = tk.Canvas(root, height=canvasHeight, width=canvasWidth)
+    def closeBox(self):
+        self.root.destroy()
+
+    def display(self):
+        raise NotImplementedError('You need to implement this')
+
+class ErrorBox(MessageBox):
+    def __init__(self, title: str, heading: str, msg: str):
+        super().__init__(title, heading, msg)
+
+    def display(self):
+        self.root.title(self.title)
+        canvas = tk.Canvas(self.root, height=self.canvasHeight, width=self.canvasWidth,
+                           bg='#D3D3D3', highlightthickness=0)
+
+        # center the window on the screen
+        width = self.root.winfo_screenwidth()  # width of mac screen (pixels)
+        height = self.root.winfo_screenheight()  # height of mac screen (pixels)
+        x = (width // 2) - (self.canvasWidth // 2)
+        y = (height // 2) - (self.canvasHeight // 2)
+        self.root.geometry("{}x{}+{}+{}".format(self.canvasWidth, self.canvasHeight, x, y))
+
+        # force the window to be in front of all other windows
+        self.root.attributes("-topmost", True)
+
+        image = tk.PhotoImage(file='error_icon.gif')  # file MUST be .gif
+        canvas.create_image(60, 50, image=image)
+
+        # print error message
+        # (pixels to right from left edge, pixels down, ...)
+        canvas.create_text(120, 30, text=self.heading, anchor='w', font=('Calibri', 20, 'bold'))
+        canvas.create_text(120, 50, text=self.msg, anchor='nw', font=('Calibri', 16))
+
+        ok = tk.Button(canvas, text="OK", width=10, height=2, highlightbackground='#D3D3D3', command=self.closeBox)
+        ok.place(x=150, y=100)
+        ok.configure(foreground='blue')
+
+        canvas.pack()
+        self.root.mainloop()
+
+'''
+def errorBox(title: str, heading: str, msg: str):
+    root = tk.Tk()
+    canvasWidth = 400
+    canvasHeight = 170
+
+    root.title(title)
+    canvas = tk.Canvas(root, height=canvasHeight, width=canvasWidth, bg='#D3D3D3', highlightthickness=0)
 
     # center the window on the screen
     width = root.winfo_screenwidth()    # width of mac screen (pixels)
     height = root.winfo_screenheight()  # height of mac screen (pixels)
     x = (width // 2) - (canvasWidth // 2)
     y = (height // 2) - (canvasHeight // 2)
-    root.geometry("{}x{}+{}+{}".format(200, 200, x, y))
+    root.geometry("{}x{}+{}+{}".format(canvasWidth, canvasHeight, x, y))
 
     # force the window to be in front of all other windows
     root.attributes("-topmost", True)
 
-    image = tk.PhotoImage(file='pnggrad8rgb.png')
-    canvas.create_image(250, 250, image=image)
+    image = tk.PhotoImage(file='error_icon.gif')  # file MUST be .gif
+    canvas.create_image(60, 50, image=image)
 
     # print error message
-    #canvas.create_text(canvasWidth / 2, 20, text=msg, fill='red')  # (pixels to right from left edge, pixels down, ...)
+    # (pixels to right from left edge, pixels down, ...)
+    canvas.create_text(120, 30, text=heading, anchor='w', font=('Calibri', 20, 'bold'))
+    canvas.create_text(120, 60, text=msg, anchor='nw', font=('Calibri', 16))
+
+    ok = tk.Button(canvas, text="OK", width=10, height=3, command=closeMessage)
+    ok.pack()
 
     canvas.pack()
-    root.mainloop()
+    root.mainloop()'''
 
 def testArrowKeys():
     """ Opens the GUI with 4 names, and the window remains unchanged.
@@ -141,8 +197,8 @@ def testScreenUpdate():
 
 def main():
     #testArrowKeys()
-    testScreenUpdate()
-    #errorBox("this is a test")
+    #testScreenUpdate()
+    ErrorBox("Error test", "Error", "this is a test").display()
 
 if __name__ == '__main__':
     main()
@@ -156,5 +212,8 @@ Sources:
 - key input: https://stackoverflow.com/questions/19895877/tkinter-cant-bind-arrow-key-events
 - centering a window: https://www.youtube.com/watch?v=gjU3Lx8XMS8
 - keep window in foreground: https://stackoverflow.com/questions/1892339/how-to-make-a-tkinter-window-jump-to-the-front
+- insert image to canvas: https://stackoverflow.com/questions/43009527/how-to-insert-an-image-in-a-canvas-item
+- remove border from window: https://stackoverflow.com/questions/4310489/how-do-i-remove-the-light-grey-border-around-my-canvas-widget
+- remove button border: https://stackoverflow.com/questions/27084321/tkinter-leaving-borders-around-widgets
 """
 
