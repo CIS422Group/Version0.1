@@ -15,6 +15,7 @@ class GUI:
         self.text = tk.Text(self.mainWindow, height=1, width=60, font=('Courier', 16))
 
         self.mainWindow.title(self.title)  # set window title (grey bar at top)
+        self.mainWindow.attributes("-topmost", True)  # keep the window in front of all other windows
 
     def leftKey(self, event):
         print("Left key pressed")
@@ -46,7 +47,29 @@ class GUI:
 
 def errorBox(msg: str):
     root = tk.Tk()
+    canvasWidth = 200
+    canvasHeight = 200
 
+    canvas = tk.Canvas(root, height=canvasHeight, width=canvasWidth)
+
+    # center the window on the screen
+    width = root.winfo_screenwidth()    # width of mac screen (pixels)
+    height = root.winfo_screenheight()  # height of mac screen (pixels)
+    x = (width // 2) - (canvasWidth // 2)
+    y = (height // 2) - (canvasHeight // 2)
+    root.geometry("{}x{}+{}+{}".format(200, 200, x, y))
+
+    # force the window to be in front of all other windows
+    root.attributes("-topmost", True)
+
+    image = tk.PhotoImage(file='pnggrad8rgb.png')
+    canvas.create_image(250, 250, image=image)
+
+    # print error message
+    #canvas.create_text(canvasWidth / 2, 20, text=msg, fill='red')  # (pixels to right from left edge, pixels down, ...)
+
+    canvas.pack()
+    root.mainloop()
 
 def testArrowKeys():
     """ Opens the GUI with 4 names, and the window remains unchanged.
@@ -103,7 +126,7 @@ def testScreenUpdate():
     highlightEnd = highlightBegin + len(name3)
     gui.update(names, highlightBegin, highlightEnd)
 
-    print('Removing Lucas in 1 second1...')
+    print('Removing Lucas in 1 second...')
     time.sleep(1)
 
     names = "{}   {}   {}   {}".format(name1, name2, name4, name5)
@@ -119,6 +142,7 @@ def testScreenUpdate():
 def main():
     #testArrowKeys()
     testScreenUpdate()
+    #errorBox("this is a test")
 
 if __name__ == '__main__':
     main()
@@ -130,5 +154,7 @@ Sources:
 - highlight name: https://www.tutorialspoint.com/python/tk_text.htm
 - read-only window: https://stackoverflow.com/questions/3842155/is-there-a-way-to-make-the-tkinter-text-widget-read-only
 - key input: https://stackoverflow.com/questions/19895877/tkinter-cant-bind-arrow-key-events
+- centering a window: https://www.youtube.com/watch?v=gjU3Lx8XMS8
+- keep window in foreground: https://stackoverflow.com/questions/1892339/how-to-make-a-tkinter-window-jump-to-the-front
 """
 
