@@ -47,7 +47,7 @@ class GUI:
 class ErrorBox(GUI):
     def __init__(self, winTitle: str):
         super().__init__(winTitle)
-        self.text = tk.
+        #self.text = tk.
 
 def testArrowKeys():
     """ Opens the GUI with 4 names, and the window remains unchanged.
