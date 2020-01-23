@@ -44,11 +44,11 @@ def initDeck(onDeck, Roster):
 
 
 def left(cur_index, onDeck, Roster):
-    cur_index -= 1
+    cur_index = (cur_index -1 ) % 4
     return cur_index
 
 def right(cur_index, onDeck, Roster):
-    cur_index += 1
+    cur_index = (cur_index + 1) % 4
     return cur_index
 
 def up(cur_index, onDeck, Roster, flagQ):
@@ -141,10 +141,19 @@ def main():
     initDeck(onDeck,Roster)
     print(OnDeckString(current_Index, onDeck))
 
+    # 1
     current_Index = right(current_Index, onDeck, Roster)
     print(OnDeckString(current_Index, onDeck))
 
+    # 0
     current_Index = left(current_Index, onDeck, Roster)
+    # 3
+    current_Index = left(current_Index, onDeck, Roster)
+    # 2
+    current_Index = left(current_Index, onDeck, Roster)
+    # 1
+    current_Index = left(current_Index, onDeck, Roster)
+
     print(OnDeckString(current_Index, onDeck))
 
     current_Index = up(current_Index, onDeck, Roster, flagQ)
