@@ -13,8 +13,5 @@ TO COMPILE THE APP:
 
             APP = ['GUI.py']    to     APP = ['<filename.py>']
 
-3. Enter the following to create the app (it will pause for around 2 seconds before finishing):
-
-            python3 setup.py py2app
-
-   This will create two folders: build and dist. The app should be located inside the 'dist' folder.
+3. Run the 'compile' executable. This will create two folders: build and dist.
+   The app should be located inside the 'dist' folder.
