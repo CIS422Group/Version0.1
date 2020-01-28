@@ -7,6 +7,10 @@ Last Modified: 1/23/20
 
 import tkinter as tk
 import time
+from backend.objects import Student, classQueue
+from backend.control import *
+# from backend.io import *
+
 
 class GUI:
     def __init__(self, winTitle: str):
@@ -17,17 +21,40 @@ class GUI:
         self.mainWindow.title(self.title)  # set window title (grey bar at top)
         self.mainWindow.attributes("-topmost", True)  # keep the window in front of all other windows
 
+        # for backend
+        self.Roster = initRoster()              # creat a golable Roster which is a quene of a Student object
+        self.onDeck = initDeck(self.Roster)     # 4 student object on deck, current_Index will be the index 
+        self.current_Index = 0                  # the picked student's index in onDeck queue
+        self.flagQ = classQueue()               # a list of student been flag 
+
+
     def leftKey(self, event):
-        print("Left key pressed")
+        # print("Left key pressed")
+        self.current_Index = left(self.current_Index, self.onDeck, self.Roster)
+        names, highlightBegin, highlightEnd = OnDeckString(self.current_Index, self.onDeck)
+        # print(names, highlightBegin, highlightEnd)
+        self.update(names, highlightBegin, highlightEnd)
 
     def rightKey(self, event):
-        print("Right key pressed")
+        # print("Right key pressed")
+        self.current_Index = right(self.current_Index, self.onDeck, self.Roster)
+        names, highlightBegin, highlightEnd = OnDeckString(self.current_Index, self.onDeck)
+        # print(names, highlightBegin, highlightEnd)
+        self.update(names, highlightBegin, highlightEnd)
 
     def upKey(self, event):
-        print("Up key pressed")
+        # print("Up key pressed")
+        self.current_Index = up(self.current_Index, self.onDeck, self.Roster, self.flagQ)
+        names, highlightBegin, highlightEnd = OnDeckString(self.current_Index, self.onDeck)
+        # print(names, highlightBegin, highlightEnd)
+        self.update(names, highlightBegin, highlightEnd)
 
     def downKey(self, event):
         print("Down key pressed")
+        self.current_Index = down(self.current_Index, self.onDeck, self.Roster)
+        names, highlightBegin, highlightEnd = OnDeckString(self.current_Index, self.onDeck)
+        # print(names, highlightBegin, highlightEnd)
+        self.update(names, highlightBegin, highlightEnd)
 
     def update(self, inText: str, highlightStart: int, highlightEnd: int, highlightColor='green'):
         """ Prints the names given in <inText> to the GUI screen.
@@ -194,11 +221,38 @@ def testScreenUpdate():
     print("\n\033[38;5;220m--- End of test. Close the cold calling window to exit ---\033[0m")
     gui.mainWindow.mainloop()
 
+def testimport():
+    Roster = classQueue()
+    importFun()
+
+def testcontrol():
+    print('--- Starting control test ---')
+
+    gui = GUI('Students on deck')
+
+    names, highlightBegin, highlightEnd = OnDeckString(gui.current_Index, gui.onDeck)
+    print(names)
+
+    gui.update(names, highlightBegin, highlightEnd)
+
+    # support for arrow key presses, bind() takes in function to use like pthread_create()
+    gui.mainWindow.bind("<Left>", gui.leftKey)
+    gui.mainWindow.bind("<Right>", gui.rightKey)
+    gui.mainWindow.bind("<Up>", gui.upKey)
+    gui.mainWindow.bind("<Down>", gui.downKey)
+
+    print("\033[38;5;220mClick on the cold call window. After pressing an arrow key,",
+          "\na message should be displayed. Close the cold call window to end the program.",
+          "\nNote: the names and highlighting should not update for this test.\033[0m")
+
+    gui.mainWindow.mainloop()  # blocks until the window is closed
 
 def main():
-    #testArrowKeys()
-    #testScreenUpdate()
-    ErrorBox("Error test", "Error", "this is a test").display()
+    # testArrowKeys()
+    # testScreenUpdate()
+    testcontrol()
+
+    # ErrorBox("Error test", "Error", "this is a test").display()
 
 if __name__ == '__main__':
     main()
